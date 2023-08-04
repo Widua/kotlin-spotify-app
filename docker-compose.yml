@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     expose:
-      - 8080:8080
+      - 8080
     ports:
       - "8080:8080"
     env_file:
@@ -17,4 +17,4 @@ services:
     image: mongo
     restart: always
     environment:
-      - MONGO_INITDB_DATABASE = spotifyData
+      - MONGO_INITDB_DATABASE=spotifyData
