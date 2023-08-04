@@ -10,6 +10,6 @@ interface SpotifyApiClient {
 
     @GetExchange("/search")
     fun searchForItem(@RequestParam("q") searchQuery : String ,
-                      @RequestParam("type") type : String ) : Flux<SpotifyResponseModel>
+                      @RequestParam("type") type : String ) : Mono<SpotifyResponseModel>
 
 }

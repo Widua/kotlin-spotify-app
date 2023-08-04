@@ -25,7 +25,7 @@ class TestRest {
 
     @GetMapping("/artist/{artistName}")
     fun findArtist(@PathVariable artistName : String) : Flux<SpotifyArtist> {
-        return spotifyApi.searchForItem(artistName,"artist").flatMap { it.artists?.items?.toFlux() }
+        return spotifyApi.searchForItem(artistName,"artist").flatMapIterable { it.artists?.items }
     }
 
 }
