@@ -1,8 +1,4 @@
 spring:
-  data:
-    mongodb:
-      host: mongo
-      database: spotifyData
   security:
     oauth2:
       client:
@@ -14,3 +10,9 @@ spring:
         provider:
           spotify:
             token-uri: https://accounts.spotify.com/api/token
+server:
+  address: localhost
+  port: 8080
+application:
+  api-offset: 20
+  base-url : https://api.spotify.com/v1

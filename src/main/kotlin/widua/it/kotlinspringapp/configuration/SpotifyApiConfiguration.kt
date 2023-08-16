@@ -1,5 +1,6 @@
-package widua.it.kotlinspringapp.spotify
+package widua.it.kotlinspringapp.configuration
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientManager
@@ -13,9 +14,13 @@ import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.support.WebClientAdapter
 import org.springframework.web.service.invoker.HttpServiceProxyFactory
 import org.springframework.web.service.invoker.createClient
+import widua.it.kotlinspringapp.service.SpotifyApiClient
 
 @Configuration
 class SpotifyApiConfiguration {
+
+    @Value("\${application.base-url}")
+    lateinit var apiBaseUrl : String
 
     @Bean
     fun authorizedClientManager(
@@ -34,14 +39,14 @@ class SpotifyApiConfiguration {
     }
 
     @Bean
-    fun spotifyApiClient( authorizedClientManager: ReactiveOAuth2AuthorizedClientManager ) : SpotifyApiClient{
+    fun spotifyApiClient( authorizedClientManager: ReactiveOAuth2AuthorizedClientManager ) : SpotifyApiClient {
         val oauth = ServerOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager)
         oauth.setDefaultClientRegistrationId("spotify")
 
         val client = WebClient
             .builder()
             .filter(oauth)
-            .baseUrl("https://api.spotify.com/v1")
+            .baseUrl(apiBaseUrl)
             .build();
 
         val serviceFactory : HttpServiceProxyFactory = HttpServiceProxyFactory
